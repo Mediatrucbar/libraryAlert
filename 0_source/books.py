@@ -2,13 +2,8 @@ from bs4 import BeautifulSoup
 
 class Books:
 
-    def getBooksList(self):
+    def getBooksList(self, web_page):
         data = []
-
-        #Open buffer to get all html code
-        fileBuffer = open('../3_others/webDump.html', 'r')
-        web_page = BeautifulSoup(fileBuffer, "html.parser")
-
         table = web_page.find('table', "tablesorter loans-history")
         table_body = table.find('tbody')
 
@@ -20,3 +15,9 @@ class Books:
             data.append([ele for ele in cols if ele])
 
         return data
+
+    def openWebPage(self):
+        fileBuffer = open('../3_others/webDump.html', 'r')
+        soup = BeautifulSoup(fileBuffer, "html.parser")
+        return soup
+
