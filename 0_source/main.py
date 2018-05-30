@@ -8,5 +8,6 @@ bookList = Books()
 
 soup = bookList.openWebPage()
 data = bookList.getBooksList(soup)
-print(data)
+
+print(htmlBuffer)
 
