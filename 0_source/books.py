@@ -3,9 +3,13 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
 class Books:
+    # Public attribute
+    book_list = []#[[1, 2, 3], [4, 5, 6]]
 
-    def getBooksList(self, web_page):
-        data = []
+    # Private attribute
+    END_DATE_COLUMN = 6
+
+    def get_books_list(self, web_page):
         table = web_page.find('table', "tablesorter loans-history")
         table_body = table.find('tbody')
 
@@ -14,9 +18,12 @@ class Books:
         for row in rows:
             cols = row.find_all('td')
             cols = [ele.text.strip() for ele in cols]
-            data.append([ele for ele in cols if ele])
+            Books.book_list.append([ele for ele in cols if ele])
 
-        return data
+        return book_list
+
+    def get_book_title(self, book_number):
+        return Books.book_list[book_number][Books.END_DATE_COLUMN]
 
     def openWebPageTest(self):
         fileBuffer = open('../3_others/webDump.html', 'r')
@@ -39,5 +46,5 @@ class Books:
         driver.get('http://bibliotheques.vyvs.fr/abonne/loans-history/id_profil/67')
         htmlBuffer = driver.page_source
 
-
+        return htmlBuffer
 
